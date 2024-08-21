@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toypad.Launcher", "Toypad.L
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{77BE8640-0B62-4865-9663-2787B50E8C8D}"
 	ProjectSection(SolutionItems) = preProject
-		publish.bat = publish.bat
+		Toypad.Cli\publish.bat = Toypad.Cli\publish.bat
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toypad.Cli", "Toypad.Cli\Toypad.Cli.csproj", "{D4BEC1FA-A437-416E-821B-6F00CA9A71D9}"
