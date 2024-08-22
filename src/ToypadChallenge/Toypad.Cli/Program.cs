@@ -1,20 +1,22 @@
-﻿using Toypad;
+﻿using System.Text;
+using Toypad;
 using Color = System.Drawing.Color;
 
 namespace ToypadCli;
 
 internal static class Program
 {
-    private static IToypad _toypad = Toypad.Toypad.CreateToypad();
+    private static readonly IToypad Toypad = global::Toypad.Toypad.CreateToypad();
 
     private static void Main()
     {
         Console.WriteLine("Toypad.Cli");
+        Console.OutputEncoding = Encoding.UTF8;
 
-        _toypad.SetColor(Pad.All, Color.DarkRed);
+        Toypad.SetColor(Pad.All, Color.DarkRed);
         
-        _toypad.TagAdded += ToypadOnTagAdded;
-        _toypad.TagRemoved += ToypadOnTagRemoved;
+        Toypad.TagAdded += ToypadOnTagAdded;
+        Toypad.TagRemoved += ToypadOnTagRemoved;
 
         Display();
         Console.ReadLine();
@@ -22,19 +24,19 @@ internal static class Program
 
     private static void ToypadOnTagRemoved(object? sender, Tag tag)
     {
-        if (sender is not IToypad toypad) return;
+        if (sender is not IToypad) return;
         Console.WriteLine();
         Console.WriteLine($"Removed from {tag.Pad}");
-        _toypad.SetColor(tag.Pad, Color.DarkBlue);
+        Toypad.SetColor(tag.Pad, Color.DarkBlue);
         Display();
     }
 
     private static void ToypadOnTagAdded(object? sender, Tag tag)
     {
-        if (sender is not IToypad toypad) return;
+        if (sender is not IToypad) return;
         Console.WriteLine();
         Console.WriteLine($"Set to {tag.Pad}");
-        _toypad.SetColor(tag.Pad, Color.Yellow);
+        Toypad.SetColor(tag.Pad, Color.Yellow);
         Display();
     }
 
@@ -43,25 +45,25 @@ internal static class Program
         Console.WriteLine();
         Task.Delay(200).Wait();
         
-        var center = _toypad.Tags.Count(t => t.Pad == Pad.Center);
+        var center = Toypad.Tags.Count(t => t.Pad == Pad.Center);
         Console.WriteLine($"     {center}");
         
-        var left = _toypad.Tags.Count(t => t.Pad == Pad.Left);
+        var left = Toypad.Tags.Count(t => t.Pad == Pad.Left);
         Console.Write($" {left} ");
 
-        Console.ForegroundColor = ClosestConsoleColor(_toypad.LeftColor);
+        Console.ForegroundColor = ClosestConsoleColor(Toypad.LeftColor);
         Console.Write("\u2599 ");
         Console.ResetColor();
         
-        Console.ForegroundColor = ClosestConsoleColor(_toypad.CenterColor);
+        Console.ForegroundColor = ClosestConsoleColor(Toypad.CenterColor);
         Console.Write("\u25cf ");
         Console.ResetColor();
         
-        Console.ForegroundColor = ClosestConsoleColor(_toypad.RightColor);
+        Console.ForegroundColor = ClosestConsoleColor(Toypad.RightColor);
         Console.Write("\u259f ");
         Console.ResetColor();
         
-        var right = _toypad.Tags.Count(t => t.Pad == Pad.Right);
+        var right = Toypad.Tags.Count(t => t.Pad == Pad.Right);
         Console.WriteLine($"{right}");
     }
       
